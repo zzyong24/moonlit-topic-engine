@@ -4,8 +4,8 @@ description: Use when 月明需要候选选题、持续选题、双九宫格、�
 metadata:
   display_name: 月明·选题引擎
   icon: icon.svg
-  version: "0.15.0"
-  updated: "2026-10-10"
+  version: "0.16.0"
+  updated: "2026-10-14"
 ---
 # 月明·选题引擎
 
@@ -45,6 +45,8 @@ metadata:
 当前四象限与账号分工从 moonlit-business-copywriter 的有效定位读取，用户最新明确选择优先。现成资产不是出题前提；事实性成稿必须有证据。
 
 ## 用户确认后的深度调研
+
+用户选定选题、进入写稿或制作前，按当前激活依赖读取 `moonlit-content-engine` 的 `references/creative-concept.md`，产出 3 个不同类型的母意象（比喻/实验/对比/故事/数据），由用户挑 1 个写入 content_brief 的 `creative_concept`；依赖缺失时报告缺口，不跳过也不自编规则。选题卡阶段只写“母意象候选方向”一句，不提前展开。
 
 用户明确pick并要求备料调研时，按 [已确认选题调研](references/picked-topic-research.md) 处理本人方向、来源补证与可执行方案。推荐、确认、调研完成、实测通过和用户认可分别记录；调研不能自动扩展成制作或发布。
 
