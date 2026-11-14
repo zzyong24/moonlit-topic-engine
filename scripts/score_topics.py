@@ -239,7 +239,9 @@ def validate_candidate(candidate: dict[str, Any]) -> list[str]:
 def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("input", type=Path)
-    parser.add_argument("--dry-run", action="store_true")
+    parser.add_argument("--dry-run", action="store_true", help="兼容旧参数；现在默认就不调用外部服务")
+    parser.add_argument("--live", action="store_true", help="真实调用 TypeSafe（付费外部接口），必须同时给 --approval")
+    parser.add_argument("--approval", default="", help="月明对本次报价的批准记录（原话/时间）；没有就不能 --live")
     parser.add_argument("--positioning", type=Path, help="用户当前认可定位 JSON；真实调用必需")
     args = parser.parse_args()
 
@@ -254,7 +256,12 @@ def main() -> int:
         return 2
 
     now = dt.datetime.now(dt.timezone.utc)
-    if args.dry_run:
+    if args.live and not args.approval.strip():
+        raise SystemExit("--live 需要 --approval：先把报价交给月明，批准后再调用（团队规则：花钱的调用每次要批准）")
+    if args.dry_run or not args.live:
+        print(json.dumps({"quote": {"service": "TypeSafe JEV (api.typesafe.ai)", "calls": len(candidates),
+                                    "price": "按 TypeSafe 当期价格，运行前查询并写进报价", "needs_approval": True}},
+                         ensure_ascii=False), file=sys.stderr)
         output = [
             {
                 "id": item["id"],

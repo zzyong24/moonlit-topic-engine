@@ -1,0 +1,20 @@
+[
+ {
+  "skill": "moonlit-topic-engine",
+  "query": "这周做什么选题？给我一个双九宫格",
+  "should_trigger": true,
+  "expected": "本地评分出候选选题；联网评分需 --live 和批准"
+ },
+ {
+  "skill": "moonlit-topic-engine",
+  "query": "帮我评估一下这个已有选题值不值得做",
+  "should_trigger": true,
+  "expected": "按四象限打分并给出理由"
+ },
+ {
+  "skill": "moonlit-topic-engine",
+  "query": "把这条抖音视频转成文字",
+  "should_trigger": false,
+  "expected": "路由到 moonlit-douyin-transcribe"
+ }
+]

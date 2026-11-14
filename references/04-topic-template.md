@@ -4,8 +4,6 @@
 
 本方法吸收 Jessi Cao《如何提高内容的爆款率：从选题到复盘，直接照做的 7 个模型》（2026-10-05）的工作表思路：[原始来源](https://x.com/JessiCao316191/status/2106941943553134889)。这是外部实践方法的适配，不是效果实证；不要求外部账号、插件或逐次重读文章。公共内容判断先按当前激活 moonlit-business-copywriter 的 content-first-principles；本文件只拥有选题卡的具体拆解、筛选和交接。
 
-**多层分析先行**：写标题和大纲前，先按 [多层分析](layered-analysis.md) 完成基础档（观众任务、现在用的办法、为什么不够用、前提句、最可能的反驳、来源标注）；P0、商单、标杆长文或作者点名的好选题再做加深档七层。JTBD 是每题必填，不分工具题和其他题。七模型继续负责拆解与交接，多层分析负责「值不值得做、会不会被误解」，两者不互相替代。
-
 ## 1. 价值诊断：需求出发点 × 交付价值
 
 不要把这里的四格标为 Q1–Q4；现有 Q1热点/Q2教程/Q3专业/Q4人设继续负责内容目标及百分制评分。
@@ -64,7 +62,6 @@
 - `outline`：必要推进及证据位置，不自动全文写作。
 - 可null的`series`：主题、本篇任务、相邻题/作品ID、差异；不是排期授权。
 - `review_plan`：`goal`、`observable_signal`、`unavailable_signals`、`observation_window`、`hypothesis`、`next_changed_factor`；实际结果仍归作品复盘。
-- `layered_analysis`：`depth_tier`（basic|deep）、`jtbd`（job_statement、current_alternatives、firing_reason、scene_sources）、`must_say_premise`、`top_objection`（objection、response）；deep 另含 `knowledge_gaps`、`objections[3]`、`forces`（anxiety、habit）、`scqa`、`premortem[3]`（cause、prevention）、`owner_confirm_items`。
 
 程序只持久化/投影这些字段，语义审核由 Agent/作者完成，不用关键词检测或结构完整代替内容质量。每日池的公共投影提供 topicAnalysis/contentBrief，不制造第二套可编辑库。旧候选缺失时投影为null；补齐时保留稳定topic_id、原生成时间、用户状态及证据来源。
 
