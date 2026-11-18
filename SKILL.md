@@ -13,12 +13,12 @@ metadata:
 
 ## 普通选题请求的默认入口
 
-采用作品工作区时先读 `topics/account-positioning.json`（若无，再读 `topics/personalization.json` 的 profile 与有效定位）。已明确认可的使命是战略边界，不是每题都要重复写“创业/产品化”：面向有专业能力、想创业的个人，帮助其把能力做成真实可交付的产品，并逐步解决营销、获客和转化。AI、独立开发、自媒体、工具和信息差是实践场景与入口。早期增长目标优先吸引定位相关的关注；干货必须落到观众能完成的任务或可检查的结果。
+采用作品工作区时先读 `topics/account-positioning.json`（若无，再读 `topics/personalization.json` 的 profile 与有效定位），并与用户最新明确反馈核对；缺少时标定位未核，不沿用旧商业导师使命补空。身份、受众与长期内容承诺由使用方配置持有，不固化到 Skill。候选须说明观众能完成的具体任务或可检查结果。
 
 默认读取 [证据驱动的日常选题](references/evidence-led-selection.md)，依次使用三种输入：
 
 1. **定位与本人交付能力**：决定“给谁看、月明凭什么讲、观众能拿走什么”，提供常青实操题。
-2. **对标作品评论需求（默认主来源）**：读取当前已认可的对标账号作品评论，提取目标用户真实提问、求教程、失败点和具体使用场景，提供需求题。不得用月明自己作品下的评论替代市场用户信号；本人评论只可作补充验证，不可冒充对标需求。原文、链接/本地证据、作品/评论 ID、采集时间和读取范围必须可追溯；单条问题标“单条请求”，不得写成高频或普遍需求。采集归 `moonlit-benchmark-research`，默认经 Ego 浏览器运行。若当前对标范围缺失或数据已过期，先按该 Skill 刷新；采集失败时如实说明，不将本人评论或 AGI Hunt 热度补成用户需求。
+2. **对标作品评论需求（默认主来源）**：读取当前已认可的对标账号作品评论，提取目标用户真实提问、求教程、失败点和具体使用场景，提供需求题。不得用月明自己作品下的评论替代市场用户信号；本人评论只可作补充验证，不可冒充对标需求。原文、链接/本地证据、作品/评论 ID、采集时间和读取范围必须可追溯；单条问题标“单条请求”，不得写成高频或普遍需求。采集归 `moonlit-benchmark-research`，优先走 `redfox-intelligence` 的公开接口与已有证据；登录态浏览器仅在本轮获准且确有缺口时使用当前 `ego-browser`。若当前对标范围缺失或数据已过期，先按该 Skill 刷新；采集失败时如实说明，不将本人评论或 AGI Hunt 热度补成用户需求。
 3. **AGI Hunt 信息**：读取已安装的 `agihunt` Skill，以当日日报和最多 1–2 个相关频道作为外部发现入口，提供信息题或新切口。AGI Hunt 是线索来源；关键事实回到官方/原始来源核验，feed 热度不是中文用户需求，也不是亲测证据。
 
 每日常规请求默认交付 **3 个**：至少一个以对标作品评论中的真实问题为主证据，一个定位实操题，一个 AGI Hunt 外部题。对标评论采集不可用时，明确写“本轮未取得新鲜对标需求证据”；其余题只能来自有证据的定位/外部来源，不得伪装成评论需求题，也不得用本人作品评论顶替。三类只是候选入口，每一题都必须通过同一定位筛选，不把来源类别误当象限或质量分。双九宫格、全组合日池和人生兴趣召回仅在用户明确要求时作为辅助研究，不再是普通“今天拍什么”的前置步骤或默认门槛。
@@ -43,6 +43,10 @@ metadata:
 - Q1热点破圈：当期事件 → 与受众有关的冲突 → 有来源的判断；无合适热点时不硬凑Q1。
 
 当前四象限与账号分工从 moonlit-business-copywriter 的有效定位读取，用户最新明确选择优先。现成资产不是出题前提；事实性成稿必须有证据。
+
+## 选题状态与编号所有权
+
+Notion 中文「选题看板」是状态唯一真源，本地 `topics/` 只保存候选与选择缓存。新建卡按当前工作区规范先查重分配 `OT-YYYYMMDD-NN`，保留历史 `TD-`/`PW-`；只有明确 pick 后才经工作区 `topics-pick` 关联 `W-` 作品，重复 pick 复用已有映射，不新造第二个作品。未选候选不建看板行。缺少 Notion 工具时输出候选文件与待同步状态，不以本地状态覆盖看板。
 
 ## 用户确认后的深度调研
 
@@ -78,13 +82,15 @@ metadata:
 
 JEV 快速匹配是**可选的外部付费接口**（TypeSafe，`api.typesafe.ai`，每个候选调用 1 次，按 TypeSafe 当期价格计费），**默认关闭**：`scripts/score_topics.py <候选JSON>` 默认只做本地确定性打分并输出报价（将调用几次、预计费用要查 TypeSafe 当期价格）。要真实调用，先把报价交给月明，月明当次批准后才运行 `scripts/score_topics.py <候选JSON> --positioning <当前定位JSON> --live --approval "<月明批准原话/时间>"`；只从环境读取 `TYPESAFE_API_KEY`，不写进文件。用途只是给候选做“实践匹配”参考分，不批准时用下面的四象限分即可。该实践匹配分与下述四象限分是不同评估口径，分别标注，不能混为同一排行榜；模型 confidence 是判断分布集中度，不是爆款概率或事实置信度。
 
-程序评分使用 `scripts/format_output.py score --rubric <已解析的权重JSON路径> --json <候选JSON>`。权重由当前激活的 `moonlit-topic-radar/references/scoring-weights.json` 提供，也可用 `MOONLIT_TOPIC_RUBRIC` 指定；不按兄弟物理目录猜路径。缺失或非法权重返回错误，不降级为另一套分数。
+本地脚本分数是确定性字段/规则启发式，不能冒充语义判断或需求证据；命题匹配仍按上面的人工可解释判断执行。程序评分使用 `scripts/format_output.py score --rubric <已解析的权重JSON路径> --json <候选JSON>`。权重由当前激活的 `moonlit-topic-radar/references/scoring-weights.json` 提供，也可用 `MOONLIT_TOPIC_RUBRIC` 指定；不按兄弟物理目录猜路径。缺失或非法权重返回错误，不降级为另一套分数。
 
+- 准入与风险：[准入判断](references/01-core-principles.md)、[评分口径](references/03-scoring-card.md)、[风险检查](references/05-risk-checklist.md)。
+- 用户明确要求观点论证时再读 [多层分析](references/layered-analysis.md)，其中旧“所有 idea 先论证”要求不适用于忠实组织已给口述；用户需要创意发散时再读 [创意概念](references/creative-concept.md)，方向和数量按本轮任务，不强制三选一、深色舞台或贯穿比例。
 - 角度发散：[传播角度参考](references/02-four-genes.md)，只作启发，不强制套公式。
 - 选题卡：[当前模板](templates/topic-card.md)；CTA 可选，评分按当前百分制。
-- 测试与资产计划：references/08-asset-inventory.md。
-- 形态选择：references/06-content-formats.md，仅用户要求多形态时读取。
-- 数据驱动运营、发布复盘与自动化：references/07-data-loop.md；先审计已有数据，再形成可检验的改进。
+- 测试与资产计划：[资产盘点](references/08-asset-inventory.md)。
+- 形态选择：[内容形态](references/06-content-formats.md)，仅用户要求多形态时读取。
+- 数据驱动运营、发布复盘与自动化：[数据闭环](references/07-data-loop.md)；先审计已有数据，再形成可检验的改进。
 - 薛辉方法论：需要选择晒过程/教知识/讲故事/说观点时，读取 xuehui-short-video-methodology 对应1张能力卡；保持原来源，不能把新对标结论冒充原书观点。
 
 参考文件若含历史强制热点、全形态或旧评分，以上当前合同优先；维护时同步清理，不向输出传播冲突。
